@@ -1,0 +1,6 @@
+sel vol C
+shrink desired=1024
+create par primary
+format fs=ntfs label="Recovery" quick
+set id="27"
+exit
