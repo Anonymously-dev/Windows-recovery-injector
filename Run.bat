@@ -59,10 +59,25 @@ powershell mkdir C:\Windows\System32\Recovery\
 reagentc /disable
 powershell rm -r C:\Windows\System32\Recovery\ -Force
 powershell mkdir C:\Windows\System32\Recovery\ -Force
-powershell cp Input\winre.wim C:\Windows\System32\Recovery\winre.wim -Force
-powershell cp Input\ReAgent.xml C:\Windows\System32\Recovery\ReAgent.xml -Force
-diskpart /s Ext.dll
-diskpart /s Gpt.dll
+:: Check if files exist before copying
+if exist "%~dp0Input\winre.wim" (
+    powershell Copy-Item "%~dp0Input\winre.wim" C:\Windows\System32\Recovery\winre.wim -Force
+) else (
+    @echo winre.wim not found!
+    pause
+    GOTO END
+)
+
+if exist "%~dp0Input\ReAgent.xml" (
+    powershell Copy-Item "%~dp0Input\ReAgent.xml" C:\Windows\System32\Recovery\ReAgent.xml -Force
+) else (
+    @echo ReAgent.xml not found!
+    pause
+    GOTO END
+)
+
+diskpart /s "%~dp0Ext.dll"
+diskpart /s "%~dp0Gpt.dll"
 reagentc /enable
 cls
 reagentc /info
@@ -79,10 +94,25 @@ powershell mkdir C:\Windows\System32\Recovery\
 reagentc /disable
 powershell rm -r C:\Windows\System32\Recovery\ -Force
 powershell mkdir C:\Windows\System32\Recovery\ -Force
-powershell cp Input\winre.wim C:\Windows\System32\Recovery\winre.wim -Force
-powershell cp Input\ReAgent.xml C:\Windows\System32\Recovery\ReAgent.xml -Force
-diskpart /s Ext.dll
-diskpart /s Mbr.dll
+:: Check if files exist before copying
+if exist "%~dp0Input\winre.wim" (
+    powershell Copy-Item "%~dp0Input\winre.wim" C:\Windows\System32\Recovery\winre.wim -Force
+) else (
+    @echo winre.wim not found!
+    pause
+    GOTO END
+)
+
+if exist "%~dp0Input\ReAgent.xml" (
+    powershell Copy-Item "%~dp0Input\ReAgent.xml" C:\Windows\System32\Recovery\ReAgent.xml -Force
+) else (
+    @echo ReAgent.xml not found!
+    pause
+    GOTO END
+)
+
+diskpart /s "%~dp0Ext.dll"
+diskpart /s "%~dp0Mbr.dll"
 reagentc /enable
 cls
 reagentc /info
